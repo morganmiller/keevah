@@ -1,4 +1,7 @@
 require "logger"
+require "faker"
+require "capybara"
+require "capybara/poltergeist"
 require "active_support"
 require "active_support/core_ext"
 
