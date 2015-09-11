@@ -46,6 +46,7 @@ module LoadScript
 
     def actions
       [:browse_loan_requests, :sign_up_as_lender]
+      #add new load script methods to this array^
     end
 
     def log_in(email="demo+horace@jumpstartlab.com", pw="password")
@@ -60,6 +61,7 @@ module LoadScript
     def browse_loan_requests
       session.visit "#{host}/browse"
       session.all(".lr-about").sample.click
+      #click through pages on loan request index
     end
 
     def log_out
