@@ -23,6 +23,7 @@ gem "traceroute"
 gem "rails_12factor", group: :production
 gem "populator", group: :production
 gem 'newrelic_rpm'
+gem 'will_paginate', '~> 3.0.6'
 
 group :development, :test do
   gem "pry-rails"
