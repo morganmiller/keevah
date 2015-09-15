@@ -6,15 +6,13 @@
   <div class="row">
     <% cache @categories do %>
       <div class="col-md-3 pull-left">
-        <!--<select class="form-control btn-info">-->
-          <% @categories.each do |c| %>
-            <%= link_to c.title.capitalize, category_path(c) %>
-          <% end %>
-        <!--</select>-->
+        <% @categories.each do |c| %>
+          <%= link_to c.title.capitalize, category_path(c) %>
+        <% end %>
       </div>
     <% end %>
 
-  <%= render "shared/search" %>
+    <%= render "shared/search" %>
 
   </div>
 </div>
