@@ -5,12 +5,10 @@
 <div class="container">
   <div class="row">
     <% cache @categories do %>
-      <div class="col-md-3 pull-left">
-        <!--<select class="form-control btn-info">-->
+      <div class="col-md-3 pull-left categories">
           <% @categories.each do |c| %>
             <%= link_to c.title.capitalize, category_path(c) %>
           <% end %>
-        <!--</select>-->
       </div>
     <% end %>
 

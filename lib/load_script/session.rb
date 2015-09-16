@@ -45,8 +45,14 @@ module LoadScript
     end
 
     def actions
-      [:browse_loan_requests, :sign_up_as_lender]
-      #add new load script methods to this array^
+      [
+        :browse_loan_requests,
+        :sign_up_as_lender,
+        :browse_loan_request_pages,
+        :browse_categories,
+        :browse_categories_pages,
+        :borrower_sign_up
+      ]
     end
 
     def log_in(email="demo+horace@jumpstartlab.com", pw="password")
@@ -61,7 +67,63 @@ module LoadScript
     def browse_loan_requests
       session.visit "#{host}/browse"
       session.all(".lr-about").sample.click
-      #click through pages on loan request index
+      puts "browsing loan requests"
+    end
+
+    def browse_loan_request_pages
+      session.visit "#{host}/browse"
+      session.all(".flickr_pagination").sample.click
+    end
+
+    def browse_categories
+      session.visit "#{host}/browse"
+      session.all(".categories").sample.click
+    end
+
+    def browse_categories_pages
+      session.visit "#{host}/browse"
+      session.all(".categories").sample.click
+      session.all(".flickr_pagination").sample.click
+    end
+
+    def borrower_sign_up
+      log_out
+      session.find("#sign-up-as-borrower").click
+      session.within("#borrowerSignUpModal") do
+        session.fill_in("user_name", with: name)
+        session.fill_in("user_email", with: new_user_email(name))
+        session.fill_in("user_password", with: "password")
+        session.fill_in("user_password_confirmation", with: "password")
+        session.click_link_or_button "Create Account"
+      end
+      puts "signing up as borrower"
+    end
+
+    def new_borrower_creates_loan_request
+      borrower_sign_up
+      session.find(".btn-info").click
+      session.within("#borrowerSignUpModal") do
+        session.fill_in("title", with: new_title)
+        session.fill_in("image_url", with: "http://exmoorpet.com/wp-content/uploads/2012/08/cat.png")
+        session.fill_in("description", with: new_description)
+        session.fill_in("requested_by_date", with: new_request_date)
+        session.fill_in("repayment_begin_date", with: new_repayment_date)
+        session.select("Education", from: "loan_request_category")
+        session.click_link_or_button "Submit"
+      end
+    end
+
+    def new_title
+      Faker::Commerce.product_name
+    end
+    def new_description
+      Faker::Company.catch_phrase
+    end
+    def new_request_date
+      Faker::Time.between(7.days.ago, 3.days.ago)
+    end
+    def new_repayment_date
+      Faker::Time.between(3.days.ago, Time.now)
     end
 
     def log_out
@@ -81,7 +143,6 @@ module LoadScript
 
     def sign_up_as_lender(name = new_user_name)
       log_out
-      session.find("#sign-up-dropdown").click
       session.find("#sign-up-as-lender").click
       session.within("#lenderSignUpModal") do
         session.fill_in("user_name", with: name)
@@ -90,6 +151,7 @@ module LoadScript
         session.fill_in("user_password_confirmation", with: "password")
         session.click_link_or_button "Create Account"
       end
+      puts "signing up as lender"
     end
 
     def categories
