@@ -87,7 +87,7 @@ module LoadScript
       session.all(".flickr_pagination").sample.click
     end
 
-    def borrower_sign_up
+    def borrower_sign_up(name = new_user_name)
       log_out
       session.find("#sign-up-as-borrower").click
       session.within("#borrowerSignUpModal") do
