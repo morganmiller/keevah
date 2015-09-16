@@ -102,7 +102,7 @@ module LoadScript
 
     def new_borrower_creates_loan_request
       borrower_sign_up
-      session.find(".btn-info").click
+      session.find(".create-request").click
       session.within("#borrowerSignUpModal") do
         session.fill_in("title", with: new_title)
         session.fill_in("image_url", with: "http://exmoorpet.com/wp-content/uploads/2012/08/cat.png")
