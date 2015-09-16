@@ -51,7 +51,8 @@ module LoadScript
         :browse_loan_request_pages,
         :browse_categories,
         :browse_categories_pages,
-        :borrower_sign_up
+        :borrower_sign_up,
+        :new_borrower_creates_loan_request
       ]
     end
 
